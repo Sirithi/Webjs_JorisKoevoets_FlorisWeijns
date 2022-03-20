@@ -1,6 +1,12 @@
 class Truck {
-    constructor(length, width){
+    arrivalInterval;
+    constructor(length, width, province){
         this.length = length;
         this.width = width;
+        this.province = province;
+    }
+
+    setArrivalTime(arrival){
+        this.arrivalInterval = arrival;
     }
 }
