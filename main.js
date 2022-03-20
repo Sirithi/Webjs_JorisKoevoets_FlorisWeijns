@@ -1,5 +1,7 @@
 document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
 
+let trucks = [];
+
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
     let stepform = document.createElement("form");
@@ -14,8 +16,10 @@ function loadForm(){
     sizeDiv.innerHTML = 'Size:';
     let truckLength = document.createElement('input');
     truckLength.placeholder = 'Truck length';
+    truckLength.id = 'truck-length';
     truckLength.type = 'number';
     let truckWidth = document.createElement('input');
+    truckWidth.id = 'truck-width';
     truckWidth.placeholder = 'Truck width';
     truckWidth.type = 'number';
 
@@ -84,7 +88,7 @@ function loadForm(){
     stepform.append(sizeDiv, provinceDiv, truckTypeDiv, buttons, stepDots);
     
     document.body.append(stepform);
-    loadScript("StepForm.js");
+    loadScript('StepForm.js');
 }
 
 function loadScript(src) {
@@ -93,3 +97,27 @@ function loadScript(src) {
 
     document.head.append(script);
   }
+
+function buildTruck(length, width, province, type){
+    let model;
+    switch (type) {
+        case 'General':
+            model = Truck;
+            break;
+        case 'Cold':
+            model = ColdTransport;
+            break;
+        case 'Express':
+            model = ExpressTransport;
+            break;
+        case 'Pallet':
+            model = PalletTransport;
+            break;
+        case 'Fragile':
+            model = FragileTransport;
+            break;
+        default:
+            throw new InputError('truck type unknown');
+    }
+    trucks.append(new model(length,width,province));
+}
