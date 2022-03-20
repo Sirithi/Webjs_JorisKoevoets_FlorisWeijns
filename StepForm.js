@@ -1,21 +1,21 @@
 let currentTab = 0;
 showTab(currentTab); 
 
-document.getElementById("prevBtn").setAttribute("onclick", "nextPrev(-1)");
-document.getElementById("nextBtn").setAttribute("onclick", "nextPrev(1)");
+document.getElementById("prev-btn").setAttribute("onclick", "nextPrev(-1)");
+document.getElementById("next-btn").setAttribute("onclick", "nextPrev(1)");
 
 function showTab(n) {
   let tabs = document.getElementsByClassName("tab");
   tabs[n].style.display = "block";
   if (n == 0) {
-    document.getElementById("prevBtn").style.display = "none";
+    document.getElementById("prev-btn").style.display = "none";
   } else {
-    document.getElementById("prevBtn").style.display = "inline";
+    document.getElementById("prev-btn").style.display = "inline";
   }
   if (n == (tabs.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("next-btn").innerHTML = "Submit";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
+    document.getElementById("next-btn").innerHTML = "Next";
   }
   fixStepIndicator(n)
 }
@@ -26,7 +26,7 @@ function nextPrev(n) {
   tabs[currentTab].style.display = "none";
   currentTab = currentTab + n;
   if (currentTab >= tabs.length) {
-    document.getElementById("truckForm").submit();
+    document.getElementById("truck-form").submit();
     return false;
   }
   showTab(currentTab);
