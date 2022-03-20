@@ -26,7 +26,25 @@ function nextPrev(n) {
   tabs[currentTab].style.display = "none";
   currentTab = currentTab + n;
   if (currentTab >= tabs.length) {
-    document.getElementById("truck-form").submit();
+    // document.getElementById("truck-form").submit();
+    const length = document.getElementById('truck-length').value;
+    const width = document.getElementById('truck-width').value;
+    const types = document.getElementsByName('type');
+    let truckType;
+    types.forEach(type => {
+      if(type.checked){
+        truckType = type.value;
+      }
+    });
+    const provinces = document.getElementsByName('province');
+    let truckProvince;
+    provinces.forEach(province => {
+      if(province.checked){
+        truckProvince = province.value;
+      }
+    });
+    buildTruck(length, width, truckProvince, truckType);
+    // trucks.append(truck);
     return false;
   }
   showTab(currentTab);
