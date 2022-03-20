@@ -2,56 +2,88 @@ document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
-    let content = document.createElement("stepform");
-    content.innerHTML=
-    `<form id="truck-form" action="">
-    <h1>Add Truck:</h1>
+    let stepform = document.createElement("form");
+    stepform.id = "truck-form";
+    stepform.action = "";
+
+    const head = document.createElement("h1");
+    head.innerHTML = 'Add Truck:'
+
+    let sizeDiv = document.createElement('div');
+    sizeDiv.className = 'tab';
+    sizeDiv.innerHTML = 'Size:';
+    let truckLength = document.createElement('input');
+    truckLength.placeholder = 'Truck length';
+    truckLength.type = 'number';
+    let truckWidth = document.createElement('input');
+    truckWidth.placeholder = 'Truck width';
+    truckWidth.type = 'number';
+
+    sizeDiv.append(truckLength, truckWidth);
+
+    let provinceDiv = document.createElement('div');
+    provinceDiv.className = 'tab';
+    provinceDiv.innerHTML = 'Province:';
+    const provinces = ['Noord-Brabant','Limburg','Zeeland','Gelderland','Zuid-Holland','Noord-Holland','Flevoland','Drenthe','Utrecht','Overijssel','Groningen','Friesland'];
+    for (province of provinces) {
+      let input = document.createElement('input');
+      input.type = 'radio';
+      input.oninput = 'this.className = ""';
+      input.value = province;
+      input.id = province;
+      input.name = 'province';
+      let label = document.createElement('label');
+      label.for = province;
+      label.innerHTML = province;
+
+      provinceDiv.append(input, label);
+    }
+    provinceDiv.children[0].checked = true;
+
+    let truckTypeDiv = document.createElement('div');
+    truckTypeDiv.className = 'tab';
+    truckTypeDiv.innerHTML = 'Type of truck:'
+    const truckTypes = ['General','Cold','Express','Pallet','Fragile'];
+    for (type of truckTypes) {
+      let input = document.createElement('input');
+      input.type = 'radio';
+      input.oninput = 'this.className = ""';
+      input.value = type;
+      input.id = type;
+      input.name = 'type';
+      let label = document.createElement('label');
+      label.for = type;
+      label.innerHTML = type;
+
+      truckTypeDiv.append(input, label);
+    }
+    truckTypeDiv.children[0].checked = true;
+
+    let buttons = document.createElement('div');
+    buttons.className = 'form-nav-buttons';
+    let prevButton = document.createElement('button');
+    prevButton.type = 'button';
+    prevButton.id = 'prev-btn';
+    prevButton.innerHTML = 'Previous';
+    let nextButton = document.createElement('button');
+    nextButton.type = 'button';
+    nextButton.id = 'next-btn';
+    nextButton.innerHTML = 'Next';
+
+    buttons.append(prevButton, nextButton);
     
-    <!-- One "tab" for each step in the form: -->
-    <div class="tab">Size:
-      <input placeholder="Truck length" type="number">
-      <input placeholder="Truck Width" type="number">
-    </div>
+    let stepDots = document.createElement('div');
+    stepDots.className = 'step-dots';
+    const numberOfPages = 3;
+    for (let i = 0; i < numberOfPages; i++) {
+      let step = document.createElement('span');
+      step.className = 'step';
+      stepDots.append(step);
+    }
+
+    stepform.append(sizeDiv, provinceDiv, truckTypeDiv, buttons, stepDots);
     
-    <div class="tab">Province:
-      <input type="radio" oninput="this.className = ''" value="Noord-Brabant" id="NB" name="province">
-      <label for="NB">Noord-Brabant</label>
-      <input type="radio" oninput="this.className = ''" value="Limburg" id="L" name="province">
-      <label for="L">Limburg</label>
-      <input type="radio" oninput="this.className = ''" value="Zeeland" id="Z" name="province">
-      <label for="Z">Zeeland</label>
-      <input type="radio" oninput="this.className = ''" value="all" id="A" name="province" checked>
-      <label for="A">All</label>
-    </div>
-    
-    <div class="tab">Type of truck:
-        <input type="radio" oninput="this.className = ''" value="general" id="general" name="type" checked>
-        <label for="general">General Transport</label>
-        <input type="radio" oninput="this.className = ''" value="cold" id="cold" name="type">
-        <label for="cold">Cold</label>
-        <input type="radio" oninput="this.className = ''" value="express" id="express" name="type">
-        <label for="express">Express</label>
-        <input type="radio" oninput="this.className = ''" value="pallet" id="pallet" name="type">
-        <label for="pallet">Pallet</label>
-        <input type="radio" oninput="this.className = ''" value="fragile" id="fragile" name="type">
-        <label for="fragile">Fragile</label>
-    </div>
-    
-    <div style="overflow:auto;">
-      <div style="float:right;">
-        <button type="button" id="prev-btn">Previous</button>
-        <button type="button" id="next-btn">Next</button>
-      </div>
-    </div>
-    
-    <div style="text-align:center;margin-top:40px;">
-      <span class="step"></span>
-      <span class="step"></span>
-      <span class="step"></span>
-    </div>
-    
-    </form>`;
-    document.body.append(content);
+    document.body.append(stepform);
     loadScript("StepForm.js");
 }
 

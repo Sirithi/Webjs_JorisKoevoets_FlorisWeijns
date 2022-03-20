@@ -46,3 +46,13 @@
   .step.finish {
     background-color: #04AA6D;
   }
+
+  .form-nav-buttons {
+    overflow: auto;
+    float: right;
+  }
+
+  .step-dots {
+    text-align: center;
+    margin-top: 40px;
+  }
