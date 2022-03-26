@@ -1,11 +1,34 @@
 
 document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
+document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConveyor(currentHall)");
 
-let currentTab = 0
-let trucks = [];
-let types = new TypeEnum(
+
+// //Canvas definition
+
+// ctx.canvas.width = COLS * BLOCK_SIZE;
+// ctx.canvas.height = ROWS * BLOCK_SIZE;
+
+// ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
+
+import{ TypeEnum } from './TypeEnum.js';
+import{ Hall } from './Hall.js';
+import{ Truck } from './Truck.js';
+window.loadForm = loadForm;
+// import{ Parcel } from './Parcel.js';
+// import{ Conveyor } from './Conveyor.js';
+
+// loadScript('hallController.js');
+
+//Truck form variables
+window.currentTab = 0
+window.trucks = [];
+export let types = new TypeEnum(
   'General','Cold','Express','Pallet','Fragile'
 );
+
+let halls = [new Hall()];
+halls[0].truck = new Truck(3,4, 'Groningen', 'cold', 0);
+let currentHall = halls[0];
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
@@ -17,7 +40,7 @@ function loadForm(){
     head.innerHTML = 'Add Truck:'
 
     let sizeDiv = document.createElement('div');
-    sizeDiv.className = 'tab';
+    sizeDiv.className = 'tab none';
     sizeDiv.innerHTML = 'Size:';
     let truckLength = document.createElement('input');
     truckLength.placeholder = 'Truck length';
@@ -31,10 +54,10 @@ function loadForm(){
     sizeDiv.append(truckLength, truckWidth);
 
     let provinceDiv = document.createElement('div');
-    provinceDiv.className = 'tab';
+    provinceDiv.className = 'tab none';
     provinceDiv.innerHTML = 'Province:';
     const provinces = ['Noord-Brabant','Limburg','Zeeland','Gelderland','Zuid-Holland','Noord-Holland','Flevoland','Drenthe','Utrecht','Overijssel','Groningen','Friesland'];
-    for (province of provinces) {
+    for (let province of provinces) {
       let input = document.createElement('input');
       input.type = 'radio';
       input.oninput = 'this.className = ""';
@@ -50,9 +73,11 @@ function loadForm(){
     provinceDiv.children[0].checked = true;
 
     let truckTypeDiv = document.createElement('div');
-    truckTypeDiv.className = 'tab';
+    truckTypeDiv.className = 'tab none';
     truckTypeDiv.innerHTML = 'Type of truck:';
-    for (type of types) {
+    for (let type of types) {
+      let div = document.createElement('div');
+      div.className = 'flex-horizontal justify-center';
       let input = document.createElement('input');
       input.type = 'radio';
       input.oninput = 'this.className = ""';
@@ -62,8 +87,9 @@ function loadForm(){
       let label = document.createElement('label');
       label.for = type;
       label.innerHTML = type;
-
-      truckTypeDiv.append(input, label);
+      label.className = 'label';
+      div.append(label, input)
+      truckTypeDiv.append(div);
     }
     truckTypeDiv.children[0].checked = true;
 
@@ -93,15 +119,14 @@ function loadForm(){
 
     stepform.append(sizeDiv, provinceDiv, truckTypeDiv, buttons, stepDots);
     
-    document.body.append(stepform);
-    // if(!document.getElementById('step-form-script')){
-      loadScript('StepForm.js');
-    // }
+    document.getElementById('truck-form-div').append(stepform);
+    loadScript('StepForm.js');
 }
 
 function loadScript(src) {
     let script = document.createElement('script');
+    script.id = src;
     script.src = src;
-    script.id = 'step-form-script';
+    script.type = 'module';
     document.head.append(script);
   }

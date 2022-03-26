@@ -1,15 +1,19 @@
+import { Truck } from './Truck.js'
+import { types} from './main.js'
+
 showTab(currentTab); 
 
 document.getElementById("prev-btn").setAttribute("onclick", "nextPrev(-1)");
 document.getElementById("next-btn").setAttribute("onclick", "nextPrev(1)");
 
 function showTab(n) {
+  console.log("n = " + n);
   let tabs = document.getElementsByClassName("tab");
-  tabs[n].style.display = "block";
+  tabs[n].className = "tab block";
   if (n == 0) {
-    document.getElementById("prev-btn").style.display = "none";
+    document.getElementById("prev-btn").className = 'none';
   } else {
-    document.getElementById("prev-btn").style.display = "inline";
+    document.getElementById("prev-btn").className = 'inline';
   }
   if (n == (tabs.length - 1)) {
     document.getElementById("next-btn").innerHTML = "Submit";
@@ -18,11 +22,11 @@ function showTab(n) {
   }
   fixStepIndicator(n);
 }
-
+window.nextPrev = nextPrev;
 function nextPrev(n) {
   let tabs = document.getElementsByClassName("tab");
   if (n == 1 && !validateForm()) return false;
-  tabs[currentTab].style.display = "none";
+  tabs[currentTab].className = "tab none";
   currentTab = currentTab + n;
   if (currentTab >= tabs.length) {
     const length = document.getElementById('truck-length').value;
@@ -50,7 +54,8 @@ function nextPrev(n) {
 
     document.getElementById('truck-form').remove();
     currentTab = 0;
-    document.body.append(addTruckBtn);
+    document.getElementById('StepForm.js').remove();
+    document.getElementById('truck-form-div').append(addTruckBtn);
     
     return false;
   }

@@ -1,11 +1,11 @@
-class Conveyor {
-    generatePackage() {
-        let packageTypes = Object.keys(Package);
-        let randomType = packageTypes[Math.floor(Math.random() * packageTypes.length)]
-        let package = Package.randomType
+export class Conveyor {
+    generateParcel() {
+        let parcelTypes = Object.keys(Parcel);
+        let randomType = parcelTypes[Math.floor(Math.random() * parcelTypes.length)]
+        let parcel = Parcel.randomType
 
-        package.rotation = Math.floor(Math.random() * 4);
+        parcel.rotation = Math.floor(Math.random() * 4);
 
-        return package;
+        return parcel;
     }
 }

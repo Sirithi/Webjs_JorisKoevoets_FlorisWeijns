@@ -1,4 +1,4 @@
-class Truck {
+export class Truck {
     constructor(length, width, province, type, arrivalInterval = 10){
         this.length = length;
         this.width = width;

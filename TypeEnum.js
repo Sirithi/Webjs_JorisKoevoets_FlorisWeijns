@@ -1,4 +1,4 @@
-class TypeEnum {
+export class TypeEnum {
     constructor(...keys) {
       keys.forEach((key, i) => {
         this[key] = i;
