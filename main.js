@@ -1,6 +1,11 @@
+
 document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
 
+let currentTab = 0
 let trucks = [];
+let types = new TypeEnum(
+  'General','Cold','Express','Pallet','Fragile'
+);
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
@@ -46,13 +51,12 @@ function loadForm(){
 
     let truckTypeDiv = document.createElement('div');
     truckTypeDiv.className = 'tab';
-    truckTypeDiv.innerHTML = 'Type of truck:'
-    const truckTypes = ['General','Cold','Express','Pallet','Fragile'];
-    for (type of truckTypes) {
+    truckTypeDiv.innerHTML = 'Type of truck:';
+    for (type of types) {
       let input = document.createElement('input');
       input.type = 'radio';
       input.oninput = 'this.className = ""';
-      input.value = type;
+      input.value = type.toLowerCase();
       input.id = type;
       input.name = 'type';
       let label = document.createElement('label');
@@ -65,6 +69,7 @@ function loadForm(){
 
     let buttons = document.createElement('div');
     buttons.className = 'form-nav-buttons';
+    buttons.id = 'form-nav-buttons';
     let prevButton = document.createElement('button');
     prevButton.type = 'button';
     prevButton.id = 'prev-btn';
@@ -77,6 +82,7 @@ function loadForm(){
     buttons.append(prevButton, nextButton);
     
     let stepDots = document.createElement('div');
+    stepDots.id = 'step-dots';
     stepDots.className = 'step-dots';
     const numberOfPages = 3;
     for (let i = 0; i < numberOfPages; i++) {
@@ -88,36 +94,14 @@ function loadForm(){
     stepform.append(sizeDiv, provinceDiv, truckTypeDiv, buttons, stepDots);
     
     document.body.append(stepform);
-    loadScript('StepForm.js');
+    // if(!document.getElementById('step-form-script')){
+      loadScript('StepForm.js');
+    // }
 }
 
 function loadScript(src) {
     let script = document.createElement('script');
     script.src = src;
-
+    script.id = 'step-form-script';
     document.head.append(script);
   }
-
-function buildTruck(length, width, province, type){
-    let model;
-    switch (type) {
-        case 'General':
-            model = Truck;
-            break;
-        case 'Cold':
-            model = ColdTransport;
-            break;
-        case 'Express':
-            model = ExpressTransport;
-            break;
-        case 'Pallet':
-            model = PalletTransport;
-            break;
-        case 'Fragile':
-            model = FragileTransport;
-            break;
-        default:
-            throw new InputError('truck type unknown');
-    }
-    trucks.append(new model(length,width,province));
-}
