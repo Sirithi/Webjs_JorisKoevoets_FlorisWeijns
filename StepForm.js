@@ -1,4 +1,3 @@
-let currentTab = 0;
 showTab(currentTab); 
 
 document.getElementById("prev-btn").setAttribute("onclick", "nextPrev(-1)");
@@ -17,7 +16,7 @@ function showTab(n) {
   } else {
     document.getElementById("next-btn").innerHTML = "Next";
   }
-  fixStepIndicator(n)
+  fixStepIndicator(n);
 }
 
 function nextPrev(n) {
@@ -26,7 +25,6 @@ function nextPrev(n) {
   tabs[currentTab].style.display = "none";
   currentTab = currentTab + n;
   if (currentTab >= tabs.length) {
-    // document.getElementById("truck-form").submit();
     const length = document.getElementById('truck-length').value;
     const width = document.getElementById('truck-width').value;
     const types = document.getElementsByName('type');
@@ -43,8 +41,17 @@ function nextPrev(n) {
         truckProvince = province.value;
       }
     });
-    buildTruck(length, width, truckProvince, truckType);
-    // trucks.append(truck);
+    trucks.push(new Truck(length, width, truckProvince, truckType));
+    let addTruckBtn = document.createElement('button');
+    addTruckBtn.id = 'add-truck-btn';
+    addTruckBtn.type = 'button';
+    addTruckBtn.innerHTML = 'Add Truck';
+    addTruckBtn.setAttribute("onclick", "loadForm()");
+
+    document.getElementById('truck-form').remove();
+    currentTab = 0;
+    document.body.append(addTruckBtn);
+    
     return false;
   }
   showTab(currentTab);
