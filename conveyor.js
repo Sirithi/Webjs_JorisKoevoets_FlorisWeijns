@@ -1,10 +1,24 @@
+import { Parcel } from './Parcel.js';
+import { drawParcel } from './conveyorController.js';
+
 export class Conveyor {
+    constructor(ctx) {
+        this.ctx = ctx;
+        this.grid = this.generateGrid();
+    }
+
+    generateGrid() {
+        return Array.from({length: ROWS}, () => Array(COLS).fill(0));
+    }
+
     generateParcel() {
         let parcelTypes = Object.keys(Parcel);
         let randomType = parcelTypes[Math.floor(Math.random() * parcelTypes.length)]
-        let parcel = Parcel.randomType
+        let parcel = Parcel[randomType];
 
         parcel.rotation = Math.floor(Math.random() * 4);
+
+        drawParcel(this.ctx, parcel);
 
         return parcel;
     }

@@ -1,25 +1,14 @@
-
-document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
-document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConveyor(currentHall)");
-
-
-// //Canvas definition
-
-// ctx.canvas.width = COLS * BLOCK_SIZE;
-// ctx.canvas.height = ROWS * BLOCK_SIZE;
-
-// ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
-
 import{ TypeEnum } from './TypeEnum.js';
 import{ Hall } from './Hall.js';
 import{ Truck } from './Truck.js';
 import {loadStepForm} from './StepForm.js';
+import {addNewConveyor} from './hallController.js';
+
+document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
+document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConveyor(currentHall)");
 
 window.loadForm = loadForm;
-// import{ Parcel } from './Parcel.js';
-// import{ Conveyor } from './Conveyor.js';
-
-// loadScript('hallController.js');
+window.addNewConveyor = addNewConveyor;
 
 //Truck form variables
 window.currentTab = 0
@@ -30,7 +19,7 @@ export let types = new TypeEnum(
 
 let halls = [new Hall()];
 halls[0].truck = new Truck(3,4, 'Groningen', 'cold', 0);
-let currentHall = halls[0];
+window.currentHall = halls[0];
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
