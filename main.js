@@ -13,6 +13,8 @@ document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConve
 import{ TypeEnum } from './TypeEnum.js';
 import{ Hall } from './Hall.js';
 import{ Truck } from './Truck.js';
+import {loadStepForm} from './StepForm.js';
+
 window.loadForm = loadForm;
 // import{ Parcel } from './Parcel.js';
 // import{ Conveyor } from './Conveyor.js';
@@ -58,6 +60,8 @@ function loadForm(){
     provinceDiv.innerHTML = 'Province:';
     const provinces = ['Noord-Brabant','Limburg','Zeeland','Gelderland','Zuid-Holland','Noord-Holland','Flevoland','Drenthe','Utrecht','Overijssel','Groningen','Friesland'];
     for (let province of provinces) {
+      let div = document.createElement('div');
+      div.className = 'flex-horizontal justify-center';
       let input = document.createElement('input');
       input.type = 'radio';
       input.oninput = 'this.className = ""';
@@ -67,10 +71,12 @@ function loadForm(){
       let label = document.createElement('label');
       label.for = province;
       label.innerHTML = province;
+      label.className = 'label';
 
-      provinceDiv.append(input, label);
+      div.append(label, input);
+      provinceDiv.append(div);
     }
-    provinceDiv.children[0].checked = true;
+    provinceDiv.children[0].children[1].checked = true;
 
     let truckTypeDiv = document.createElement('div');
     truckTypeDiv.className = 'tab none';
@@ -88,6 +94,7 @@ function loadForm(){
       label.for = type;
       label.innerHTML = type;
       label.className = 'label';
+
       div.append(label, input)
       truckTypeDiv.append(div);
     }
@@ -120,13 +127,13 @@ function loadForm(){
     stepform.append(sizeDiv, provinceDiv, truckTypeDiv, buttons, stepDots);
     
     document.getElementById('truck-form-div').append(stepform);
-    loadScript('StepForm.js');
+    loadStepForm();
 }
 
-function loadScript(src) {
-    let script = document.createElement('script');
-    script.id = src;
-    script.src = src;
-    script.type = 'module';
-    document.head.append(script);
-  }
+// function loadScript(src) {
+//     let script = document.createElement('script');
+//     script.id = src;
+//     script.src = src;
+//     script.type = 'module';
+//     document.head.append(script);
+//   }

@@ -1,5 +1,5 @@
 /* Style the input fields */
-input {
+input[type=number] {
   padding: 10px;
   width: 100%;
   font-size: 17px;
@@ -73,6 +73,11 @@ input.invalid {
 
 .label {
   width: 20%;
+  white-space: nowrap;
+}
+
+input[type=radio] {
+  width: 80%;
 }
 
 .justify-center {
