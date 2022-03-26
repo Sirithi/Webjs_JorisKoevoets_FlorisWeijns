@@ -16,8 +16,6 @@ export class Conveyor {
         let randomType = parcelTypes[Math.floor(Math.random() * parcelTypes.length)]
         let parcel = Parcel[randomType];
 
-        parcel.rotation = Math.floor(Math.random() * 4);
-
         drawParcel(this.ctx, parcel);
 
         return parcel;
