@@ -91,7 +91,7 @@ function loadForm(){
       div.append(label, input)
       truckTypeDiv.append(div);
     }
-    truckTypeDiv.children[0].checked = true;
+    truckTypeDiv.children[0].children[1].checked = true;
 
     let buttons = document.createElement('div');
     buttons.className = 'form-nav-buttons';
