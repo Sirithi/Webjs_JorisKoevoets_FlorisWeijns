@@ -46,13 +46,13 @@ function loadForm(){
 
     let truckTypeDiv = document.createElement('div');
     truckTypeDiv.className = 'tab';
-    truckTypeDiv.innerHTML = 'Type of truck:'
+    truckTypeDiv.innerHTML = 'Type of truck:';
     const truckTypes = ['General','Cold','Express','Pallet','Fragile'];
     for (type of truckTypes) {
       let input = document.createElement('input');
       input.type = 'radio';
       input.oninput = 'this.className = ""';
-      input.value = type;
+      input.value = type.toLowerCase();
       input.id = type;
       input.name = 'type';
       let label = document.createElement('label');
@@ -100,24 +100,6 @@ function loadScript(src) {
 
 function buildTruck(length, width, province, type){
     let model;
-    switch (type) {
-        case 'General':
-            model = Truck;
-            break;
-        case 'Cold':
-            model = ColdTransport;
-            break;
-        case 'Express':
-            model = ExpressTransport;
-            break;
-        case 'Pallet':
-            model = PalletTransport;
-            break;
-        case 'Fragile':
-            model = FragileTransport;
-            break;
-        default:
-            throw new InputError('truck type unknown');
-    }
-    trucks.append(new model(length,width,province));
+    let truck = new Truck(length, width, province, type);
+    trucks.push(truck);
 }
