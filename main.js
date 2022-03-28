@@ -22,11 +22,17 @@ export let types = new TypeEnum(
 let halls = [new Hall()];
 window.currentHall = halls[0];
 
-let el = null;
+window.el = null;
 
 document.querySelector('[draggable]').addEventListener('dragstart', e => {
-  el = e.target.cloneNode(true);
+  el = e.target;
+  console.log(e.target);
 });
+
+document.querySelector('[draggable]').addEventListener('drop', e => {
+  e.preventDefault();
+  console.log(e.target.offsetX);
+})
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();

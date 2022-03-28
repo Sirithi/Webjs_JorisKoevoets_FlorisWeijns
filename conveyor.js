@@ -5,6 +5,7 @@ export class Conveyor {
     constructor(ctx) {
         this.ctx = ctx;
         this.grid = this.generateGrid();
+        this.parcels = [];
     }
 
     generateGrid() {
@@ -15,7 +16,7 @@ export class Conveyor {
         let parcelTypes = Object.keys(Parcel);
         let randomType = parcelTypes[Math.floor(Math.random() * parcelTypes.length)]
         let parcel = Parcel[randomType];
-
+        this.parcels.push(parcel);
         drawParcel(this.ctx, parcel);
 
         return parcel;

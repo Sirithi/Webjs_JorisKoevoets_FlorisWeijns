@@ -12,7 +12,7 @@ export function addNewConveyor(hall){
     ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
 
     let conveyor = new Conveyor(ctx);
-    let parcel = conveyor.generateParcel();
+    conveyor.generateParcel();
 
     hall.addConveyor(conveyor);
 }
@@ -21,10 +21,16 @@ export function addTruckFromQueue(hall, trucks){
     hall.truck = trucks.shift();
     console.log(hall.truck);
     let canvas = document.createElement('canvas');
-    canvas.className += ' dropzone';
+    canvas.className += 'dropzone';
     canvas.addEventListener('drop', (e) =>{
         e.preventDefault();
-        e.target.appendChild(el)
+        hall.conveyor.
+        hall.truck.fillSpaces(parcel, e.offsetX, e.offsetY);
+    });
+    canvas.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        //TODO: showPreview();
+
     });
     document.getElementById('truck').append(canvas);
 
