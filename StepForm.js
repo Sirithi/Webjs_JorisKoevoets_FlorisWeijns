@@ -8,7 +8,6 @@ export function loadStepForm() {
   document.getElementById("next-btn").setAttribute("onclick", "nextPrev(1)");
 
   function showTab(n) {
-    console.log("n = " + n);
     let tabs = document.getElementsByClassName("tab");
     tabs[n].className = "tab block";
     if (n == 0) {

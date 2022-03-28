@@ -1,5 +1,5 @@
 import{ Conveyor } from './Conveyor.js'
-import { drawTruck } from './truckController.js';
+import { drawTruck, handleDrop } from './truckController.js';
 
 export function addNewConveyor(hall){
     let conveyor = new Conveyor();
@@ -20,8 +20,7 @@ export function addTruckFromQueue(hall, trucks){
     
     truckDiv.addEventListener('drop', (e) =>{
         e.preventDefault();
-        console.log(e.clientX + " And " + e.clientY);
-        console.log(document.elementFromPoint(e.clientX, e.clientY));
+        handleDrop(e);
     });
 
     truckDiv.addEventListener('dragover', (e) => {
