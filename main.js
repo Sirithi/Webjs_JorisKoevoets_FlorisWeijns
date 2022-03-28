@@ -19,6 +19,10 @@ export let types = new TypeEnum(
   'General','Cold','Express','Pallet','Fragile'
 );
 
+// document.addEventListener('mousemove', (e) => {
+//   console.log(e.clientX + " And " + e.clientY);
+// })
+
 let halls = [new Hall()];
 window.currentHall = halls[0];
 

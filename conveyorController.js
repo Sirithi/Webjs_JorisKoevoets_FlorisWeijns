@@ -18,8 +18,6 @@ export function drawParcel(parcel, conveyorDiv) {
             }
             rowDiv.append(cellDiv);
         }
-        console.log(parcel.type);
-        console.log(shape[row]);
     }
     conveyorDiv.append(parcelDiv);
 }
