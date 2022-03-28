@@ -90,17 +90,23 @@ input[type=radio] {
   min-height: 120px;
 }
 
-.parcel-cell {
+.cell {
   max-width: 30px;
   min-width: 30px;
   min-height: 30px;
   max-height: 30px;
 }
 
-.parcel-row {
+.my-row {
   display: flex;
 }
 
 .filled{
   background-color: black;
+}
+
+.truck-div{
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
 }

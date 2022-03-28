@@ -14,25 +14,13 @@ window.addTruckFromQueue = addTruckFromQueue;
 
 //Truck form variables
 window.currentTab = 0
-window.trucks = [new Truck(3,4, 'Groningen', 'cold', 0)];
+window.trucks = [new Truck(6,4, 'Groningen', 'cold', 0)];
 export let types = new TypeEnum(
   'General','Cold','Express','Pallet','Fragile'
 );
 
 let halls = [new Hall()];
 window.currentHall = halls[0];
-
-window.el = null;
-
-document.querySelector('[draggable]').addEventListener('dragstart', e => {
-  el = e.target;
-  console.log(e.target);
-});
-
-document.querySelector('[draggable]').addEventListener('drop', e => {
-  e.preventDefault();
-  console.log(e.target.offsetX);
-})
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
