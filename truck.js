@@ -25,6 +25,6 @@ export class Truck {
     }
 
     fillSpaces(parcel, xCoord, yCoord){
-
+        
     }
 }

@@ -1,10 +1,20 @@
-export function drawParcel(ctx, parcel) {
+export function drawParcel(parcel, conveyorDiv) {
     const shape = parcel.shape()
+    let parcelDiv = document.createElement('div');
+    parcelDiv.className = 'parcel-div';
+    parcelDiv.draggable = 'true';
     for (let row = 0; row < shape.length; row++) {
+        let rowDiv = document.createElement('div');
+        rowDiv.className = 'parcel-row';
+        parcelDiv.append(rowDiv);
         for (let cell = 0; cell < shape[row].length; cell++) {
+            let cellDiv = document.createElement('div');
+            cellDiv.className = 'parcel-cell';
             if(shape[row][cell]) {
-                ctx.fillRect(cell, row, 1, 1);
+                cellDiv.className += ' filled';
             }
+            rowDiv.append(cellDiv);
         }
     }
+    conveyorDiv.append(parcelDiv);
 }
