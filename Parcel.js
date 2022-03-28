@@ -16,58 +16,48 @@ export class Parcel {
         switch (this.type) {
             case 'I':
                 result = [
-                    [0, 0, 1, 0],
-                    [0, 0, 1, 0],
-                    [0, 0, 1, 0],
-                    [0, 0, 1, 0]
+                    [1],
+                    [1],
+                    [1],
+                    [1]
                 ];
                 break;
             case 'O':
                 result = [
-                    [0, 0, 0, 0],
-                    [0, 1, 1, 0],
-                    [0, 1, 1, 0],
-                    [0, 0, 0, 0]
+                    [1, 1,],
+                    [1, 1,]
                 ];
                 break;
             case 'T':
                 result = [
-                    [0, 0, 0, 0],
-                    [0, 1, 1, 1],
-                    [0, 0, 1, 0],
-                    [0, 0, 0, 0]
+                    [1, 1, 1],
+                    [0, 1, 0]
                 ];
                 break;
             case 'J':
                 result = [
-                    [0, 0, 1, 0],
-                    [0, 0, 1, 0],
-                    [0, 1, 1, 0],
-                    [0, 0, 0, 0]
+                    [0, 1],
+                    [0, 1],
+                    [1, 1]
                 ];
                 break;
             case 'L':
                 result = [
-                    [0, 1, 0, 0],
-                    [0, 1, 0, 0],
-                    [0, 1, 1, 0],
-                    [0, 0, 0, 0]
+                    [1, 0,],
+                    [1, 0,],
+                    [1, 1,]
                 ];
                 break;
             case 'S':
                 result = [
-                    [0, 0, 0, 0],
-                    [0, 0, 1, 1],
-                    [0, 1, 1, 0],
-                    [0, 0, 0, 0]
+                    [0, 1, 1],
+                    [1, 1, 0]
                 ];
                 break;
             case 'Z':
                 result = [
-                    [0, 0, 0, 0],
-                    [1, 1, 0, 0],
-                    [0, 1, 1, 0],
-                    [0, 0, 0, 0]
+                    [1, 1, 0],
+                    [0, 1, 1]
                 ];
                 break;
         }
@@ -83,9 +73,9 @@ export class Parcel {
         }
         console.log('rotate');
         let rotatedShape = [];
-        for (let x = 0; x < shape.length; x++) {
+        for (let x = 0; x < shape[0].length; x++) {
             let row = []
-            for (let y = shape[x].length - 1; y >= 0; y--) {
+            for (let y = shape.length - 1; y >= 0; y--) {
                 row.push(shape[y][x]);
             }
             rotatedShape.push(row);

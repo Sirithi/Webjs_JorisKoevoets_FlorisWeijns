@@ -86,8 +86,7 @@ input[type=radio] {
 }
 
 .parcel-div {
-  min-width: 120px;
-  min-height: 120px;
+  width: fit-content;
 }
 
 .cell {
@@ -99,6 +98,7 @@ input[type=radio] {
 
 .my-row {
   display: flex;
+  width: fit-content;
 }
 
 .filled{
@@ -109,4 +109,10 @@ input[type=radio] {
   border-color: black;
   border-style: solid;
   border-width: 1px;
+}
+
+.conveyor {
+  min-width: 120px;
+  min-height: 120px;
+  margin: 5x;
 }
