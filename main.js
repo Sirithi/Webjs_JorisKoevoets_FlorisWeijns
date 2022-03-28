@@ -2,24 +2,31 @@ import{ TypeEnum } from './TypeEnum.js';
 import{ Hall } from './Hall.js';
 import{ Truck } from './Truck.js';
 import {loadStepForm} from './StepForm.js';
-import {addNewConveyor} from './hallController.js';
+import {addNewConveyor, addTruckFromQueue} from './hallController.js';
 
 document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
 document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConveyor(currentHall)");
+document.getElementById("add-transport-btn").setAttribute("onclick", "addTruckFromQueue(currentHall, trucks)");
 
 window.loadForm = loadForm;
 window.addNewConveyor = addNewConveyor;
+window.addTruckFromQueue = addTruckFromQueue;
 
 //Truck form variables
 window.currentTab = 0
-window.trucks = [];
+window.trucks = [new Truck(3,4, 'Groningen', 'cold', 0)];
 export let types = new TypeEnum(
   'General','Cold','Express','Pallet','Fragile'
 );
 
 let halls = [new Hall()];
-halls[0].truck = new Truck(3,4, 'Groningen', 'cold', 0);
 window.currentHall = halls[0];
+
+let el = null;
+
+document.querySelector('[draggable]').addEventListener('dragstart', e => {
+  el = e.target.cloneNode(true);
+});
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
