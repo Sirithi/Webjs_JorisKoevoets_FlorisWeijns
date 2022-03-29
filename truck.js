@@ -14,9 +14,9 @@ export class Truck {
 
     setSpaces(){
         let truckSpaces = [];
-        for (let y = 0; y < this.length; y++) {
+        for (let y = 0; y < this.width; y++) {
             let row = [];
-            for (let x = 0; x < this.width; x++) {
+            for (let x = 0; x < this.length; x++) {
                 row.push(0);
             }
             truckSpaces.push(row);
@@ -24,7 +24,7 @@ export class Truck {
         return truckSpaces;
     }
 
-    fillSpaces(parcel, xCoord, yCoord){
-        
+    fillSpaces(xCoord, yCoord){
+        this.spaces[yCoord][xCoord] = 1;
     }
 }

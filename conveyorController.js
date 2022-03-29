@@ -29,7 +29,7 @@ export function drawParcel(parcel, conveyorDivId) {
         parcelDiv.append(rowDiv);
         for (let cell = 0; cell < shape[row].length; cell++) {
             let cellDiv = document.createElement('div');
-            cellDiv.id = conveyorDivId.split(':')[1] + '-parcel-' + cell + '-' + row;
+            cellDiv.id = conveyorDivId + '-parcel-' + cell + '-' + row;
             cellDiv.className = 'cell';
             if(shape[row][cell]) {
                 cellDiv.className += ' filled';

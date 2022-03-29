@@ -1,6 +1,33 @@
-import { heldCell } from "./conveyorController.js";
+import { generateParcel, heldCell } from "./conveyorController.js";
+import { loadHall } from "./hallController.js";
 
-export function drawTruck(truck, truckDiv){
+
+export function drawTruck(truck){
+    let truckDiv = document.createElement('div');
+    truckDiv.className = 'truck-div dropzone';
+    document.getElementById('truck').append(truckDiv);
+
+    truckDiv.addEventListener('drop', (e) =>{
+        e.preventDefault();
+        let heldCell = handleDrop(e)
+        if (heldCell) {
+            let conveyorDiv = heldCell.parentElement.parentElement.parentElement;
+            let conveyor = currentHall.conveyors[currentHall.conveyors.findIndex(conveyor => {
+                if (conveyor.id == conveyorDiv.id.split(':')[1]) {
+                    return true;
+                }
+                return false;
+            })];
+            generateParcel(conveyor);
+            loadHall()
+        }
+    });
+
+    truckDiv.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        //TODO: showPreview();
+    });
+
     for (let i = 0; i < truck.width; i++) {
         let truckRow = document.createElement('div');
         truckRow.className = 'my-row';
@@ -11,6 +38,15 @@ export function drawTruck(truck, truckDiv){
             truckRow.append(cell);
         }
         truckDiv.append(truckRow);
+    }
+
+    for (let y = 0; y < truck.spaces.length; y++) {
+        for (let x = 0; x < truck.spaces[y].length; x++) {
+            if(truck.spaces[y][x]){
+                console.log('truck-' + x + '-' + y);
+                document.getElementById('truck-' + x + '-' + y).className += ' filled';
+            }
+        }
     }
 }
 
@@ -55,7 +91,9 @@ export function handleDrop(e) {
 
     truckCellsToFill.forEach(cell => {
         cell.className += ' filled';
+        currentHall.truck.fillSpaces(cell.id.split('-')[1], cell.id.split('-')[2]);
     })
+    
     return heldCell;
 }
 

@@ -23,7 +23,7 @@ export let types = new TypeEnum(
 
 window.currentHall = new Hall(1);
 window.otherHall = new Hall(2);
-loadHall(currentHall);
+loadHall();
 
 
 function loadForm(){

@@ -7,7 +7,7 @@ export function addNewConveyor(hall){
     conveyor.id = hall.id + '-' +(hall.conveyors.length + 1);
     generateParcel(conveyor);
     hall.addConveyor(conveyor);
-    loadHall(hall, true);
+    loadHall(true);
 }
 
 function generateConveyorDiv(conveyor){
@@ -23,38 +23,16 @@ export function addTruckFromQueue(hall, trucks){
         return;
     }
     hall.truck = trucks.shift();
-    let truckDiv = document.createElement('div');
-    truckDiv.className = 'truck-div dropzone';
-    document.getElementById('truck').append(truckDiv);
     
-    truckDiv.addEventListener('drop', (e) =>{
-        e.preventDefault();
-        let heldCell = handleDrop(e)
-        if (heldCell) {
-            let conveyorDiv = heldCell.parentElement.parentElement.parentElement;
-            let conveyor = hall.conveyors[hall.conveyors.findIndex(conveyor => {
-                if (conveyor.id == conveyorDiv.id.split(':')[1]) {
-                    return true;
-                }
-                return false;
-            })];
-            generateParcel(conveyor);
-        }
-    });
 
-    truckDiv.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        //TODO: showPreview();
-    });
-
-    drawTruck(hall.truck, truckDiv);
+    drawTruck(hall.truck);
 }
 
 export function switchHall(){
     let tempHall = window.currentHall;
     window.currentHall = window.otherHall;
     window.otherHall = tempHall;
-    loadHall(currentHall);
+    loadHall();
 }
 
 function emptyHall(){
@@ -66,13 +44,17 @@ function emptyHall(){
     
 }
 
-export function loadHall(currentHall, shouldGenerateParcel = false){
+export function loadHall(shouldGenerateParcel = false){
     emptyHall();
     let conveyors = currentHall.conveyors;
     conveyors.forEach(conveyor => {
         let conveyorDiv = generateConveyorDiv(conveyor);
         conveyorDiv.append(drawParcel(conveyor.parcel, conveyorDiv.id.split(':')[1]));
     });
+    if(currentHall.truck){
+        drawTruck(currentHall.truck);
+    }
+    
 }
 
 function canAddTruck(hall, trucks){
