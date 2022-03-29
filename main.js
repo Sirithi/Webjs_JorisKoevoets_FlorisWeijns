@@ -2,15 +2,17 @@ import{ TypeEnum } from './TypeEnum.js';
 import{ Hall } from './Hall.js';
 import{ Truck } from './Truck.js';
 import {loadStepForm} from './StepForm.js';
-import {addNewConveyor, addTruckFromQueue} from './hallController.js';
+import {addNewConveyor, addTruckFromQueue, loadHall, switchHall} from './hallController.js';
 
 document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
 document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConveyor(currentHall)");
 document.getElementById("add-transport-btn").setAttribute("onclick", "addTruckFromQueue(currentHall, trucks)");
+document.getElementById("switch-hall-btn").setAttribute("onclick", "switchHall()");
 
 window.loadForm = loadForm;
 window.addNewConveyor = addNewConveyor;
 window.addTruckFromQueue = addTruckFromQueue;
+window.switchHall = switchHall;
 
 //Truck form variables
 window.currentTab = 0
@@ -19,8 +21,10 @@ export let types = new TypeEnum(
   'General','Cold','Express','Pallet','Fragile'
 );
 
-window.currentHall = new Hall();
-window.otherHall = new Hall();
+window.currentHall = new Hall(1);
+window.otherHall = new Hall(2);
+loadHall(currentHall);
+
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();

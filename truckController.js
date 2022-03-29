@@ -21,22 +21,25 @@ export function handleDrop(e) {
     let parcelHeight = heldCell.parentElement.parentElement.childElementCount;
 
     let heldCellId = heldCell.id;
-    let [_1, heldX, heldY] = heldCellId.split('-');
+    console.log(heldCellId);
+    let [_1, _2, _3, heldX, heldY] = heldCellId.split('-');
 
     let droppedOnId = droppedOn.id;
-    let [_2, droppedX, droppedY] = droppedOnId.split('-')
+    let [_4, droppedX, droppedY] = droppedOnId.split('-');
 
     let topLeftX = droppedX - heldX;
     let topLeftY = droppedY - heldY;
 
-    let conveyorId = heldCell.parentElement.parentElement.parentElement.id.split('-')[1];
+    let conveyorId = heldCell.parentElement.parentElement.parentElement.id.split(':')[1];
 
     let truckCellsToFill = [];
     try {
         for (let i = 0; i < parcelWidth; i++) {
             for (let j = 0; j < parcelHeight; j++) {
-                let parcelCell = document.getElementById(conveyorId + 'parcel-' + i + '-' + j);
+                let parcelCell = document.getElementById(conveyorId + '-parcel-' + i + '-' + j);
                 let truckCell = document.getElementById('truck-' + (topLeftX + i) + '-' + (topLeftY + j));
+                console.log(parcelCell);
+                console.log(truckCell);
                 if (!parcelCell || !truckCell) {
                     throw new OutOfBoundsException('Parcel out of bounds');
                 }

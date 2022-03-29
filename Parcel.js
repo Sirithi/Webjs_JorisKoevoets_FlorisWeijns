@@ -9,6 +9,7 @@ export class Parcel {
 
     constructor(type) {
         this.type = type;
+        this.shape = this.shape();
     }
 
     shape() {

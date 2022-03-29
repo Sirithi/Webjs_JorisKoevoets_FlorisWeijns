@@ -1,9 +1,9 @@
 import { addNewConveyor } from "./hallController.js";
 export class Hall {
-    constructor(){
+    constructor(id){
+        this.id = id;
         this.conveyors = [];
         this.truck;
-        addNewConveyor(this);
     }
     addConveyor(conveyor) {
         this.conveyors.push(conveyor);

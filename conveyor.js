@@ -1,10 +1,9 @@
-import { Parcel } from './Parcel.js';
-import { clearParcel, drawParcel } from './conveyorController.js';
+import { generateParcel } from "./conveyorController.js";
 
 export class Conveyor {
     constructor() {
         // this.grid = this.generateGrid();
-        this.parcel;
+        this.parcel = generateParcel(this);
     }
 
     // generateGrid() {

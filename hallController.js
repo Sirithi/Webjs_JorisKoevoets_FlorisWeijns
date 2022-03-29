@@ -1,17 +1,21 @@
 import{ Conveyor } from './Conveyor.js'
-import { clearParcel, generateParcel } from './conveyorController.js';
+import { drawParcel, generateParcel } from './conveyorController.js';
 import { drawTruck, handleDrop } from './truckController.js';
 
 export function addNewConveyor(hall){
     let conveyor = new Conveyor();
+    conveyor.id = hall.id + '-' +(hall.conveyors.length + 1);
+    generateParcel(conveyor);
+    hall.addConveyor(conveyor);
+    loadHall(hall, true);
+}
+
+function generateConveyorDiv(conveyor){
     let div = document.createElement('div');
-    div.id = 'conveyor-' + (hall.conveyors.length + 1);
-    conveyor.id = hall.conveyors.length + 1;
+    div.id = 'conveyor:' + conveyor.id;
     div.className = 'conveyor';
     document.getElementById('conveyors').append(div);
-    generateParcel(div, conveyor);
-
-    hall.addConveyor(conveyor);
+    return div;
 }
 
 export function addTruckFromQueue(hall, trucks){
@@ -29,13 +33,12 @@ export function addTruckFromQueue(hall, trucks){
         if (heldCell) {
             let conveyorDiv = heldCell.parentElement.parentElement.parentElement;
             let conveyor = hall.conveyors[hall.conveyors.findIndex(conveyor => {
-                if (conveyor.id == conveyorDiv.id.split('-')[1]) {
+                if (conveyor.id == conveyorDiv.id.split(':')[1]) {
                     return true;
                 }
                 return false;
             })];
-            
-            generateParcel(conveyorDiv, conveyor);
+            generateParcel(conveyor);
         }
     });
 
@@ -47,15 +50,30 @@ export function addTruckFromQueue(hall, trucks){
     drawTruck(hall.truck, truckDiv);
 }
 
-export function switchHall(currentHall){
-    let tempHall = currentHall;
-    currentHall = otherHall;
-    otherHall = tempHall;
+export function switchHall(){
+    let tempHall = window.currentHall;
+    window.currentHall = window.otherHall;
+    window.otherHall = tempHall;
     loadHall(currentHall);
 }
 
-export function loadHall(currentHall){
+function emptyHall(){
+    let truckDiv = document.getElementsByClassName('truck-div');
+    while(truckDiv.length > 0) {
+        truckDiv[0].remove()
+    }
+    document.getElementById('conveyors').replaceChildren();
     
+}
+
+export function loadHall(currentHall, shouldGenerateParcel = false){
+    emptyHall();
+    let conveyors = currentHall.conveyors;
+    conveyors.forEach(conveyor => {
+        let conveyorDiv = generateConveyorDiv(conveyor);
+        console.log(conveyorDiv);
+        conveyorDiv.append(drawParcel(conveyor.parcel, conveyorDiv.id.split(':')[1]));
+    });
 }
 
 function canAddTruck(hall, trucks){

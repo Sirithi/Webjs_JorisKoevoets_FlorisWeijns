@@ -2,17 +2,17 @@ import { Parcel } from "./Parcel.js";
 
 export let heldCell;
 
-export function generateParcel(conveyorDiv, conveyor) {
-    clearParcel(conveyorDiv, conveyor);
+export function generateParcel(conveyor) {
+    // clearParcel(conveyorDiv, conveyor);
     let parcelTypes = Object.keys(Parcel);
     let randomType = parcelTypes[Math.floor(Math.random() * parcelTypes.length)]
     let parcel = Parcel[randomType];
     conveyor.parcel = parcel;
-    conveyorDiv.append(drawParcel(parcel, conveyorDiv.id));
+    // conveyorDiv.append(drawParcel(parcel, conveyorDiv.id));
 }
 
 export function drawParcel(parcel, conveyorDivId) {
-    const shape = parcel.shape();
+    const shape = parcel.shape;
     let parcelDiv = document.createElement('div');
     parcelDiv.className = 'parcel-div';
     parcelDiv.draggable = 'true';
@@ -29,7 +29,7 @@ export function drawParcel(parcel, conveyorDivId) {
         parcelDiv.append(rowDiv);
         for (let cell = 0; cell < shape[row].length; cell++) {
             let cellDiv = document.createElement('div');
-            cellDiv.id = conveyorDivId.split('-')[1] + 'parcel-' + cell + '-' + row;
+            cellDiv.id = conveyorDivId.split(':')[1] + '-parcel-' + cell + '-' + row;
             cellDiv.className = 'cell';
             if(shape[row][cell]) {
                 cellDiv.className += ' filled';
