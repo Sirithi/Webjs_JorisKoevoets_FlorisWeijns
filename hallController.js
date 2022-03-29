@@ -1,15 +1,15 @@
 import{ Conveyor } from './Conveyor.js'
+import { clearParcel, generateParcel } from './conveyorController.js';
 import { drawTruck, handleDrop } from './truckController.js';
 
 export function addNewConveyor(hall){
-    let conveyor = new Conveyor();
     let div = document.createElement('div');
-    div.id = 'conveyor' + (hall.conveyors.length + 1);
+    div.id = 'conveyor-' + (hall.conveyors.length + 1);
     div.className = 'conveyor';
     document.getElementById('conveyors').append(div);
-    conveyor.generateParcel(div);
+    generateParcel(div);
 
-    hall.addConveyor(conveyor);
+    hall.addConveyor();
 }
 
 export function addTruckFromQueue(hall, trucks){
@@ -20,7 +20,11 @@ export function addTruckFromQueue(hall, trucks){
     
     truckDiv.addEventListener('drop', (e) =>{
         e.preventDefault();
-        handleDrop(e);
+        let heldCell = handleDrop(e)
+        if (heldCell) {
+            let conveyorDiv = heldCell.parentElement.parentElement.parentElement;
+            generateParcel(conveyorDiv);
+        }
     });
 
     truckDiv.addEventListener('dragover', (e) => {

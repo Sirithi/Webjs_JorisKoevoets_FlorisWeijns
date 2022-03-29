@@ -6,6 +6,7 @@ export function drawTruck(truck, truckDiv){
         truckRow.className = 'my-row';
         for (let j = 0; j < truck.length; j++) {
             let cell = document.createElement('div');
+            cell.id = 'truck-' + j + '-' + i;
             cell.className = 'cell';
             truckRow.append(cell);
         }
@@ -15,68 +16,49 @@ export function drawTruck(truck, truckDiv){
 
 export function handleDrop(e) {
     let droppedOn = document.elementFromPoint(e.clientX, e.clientY);
-
+    
     let parcelWidth = heldCell.parentElement.childElementCount;
     let parcelHeight = heldCell.parentElement.parentElement.childElementCount;
 
-    let heldCellHorizontalIndexOnParcel = 0;
-    let leftParcelCell = heldCell;
-    while (leftParcelCell.previousSibling) {
-        leftParcelCell = leftParcelCell.previousSibling;
-        heldCellHorizontalIndexOnParcel++;
-    }
+    let heldCellId = heldCell.id;
+    let [_1, heldX, heldY] = heldCellId.split('-');
 
-    let heldCellVerticalIndexOnParcel = 0
-    let firstParcelRow = heldCell.parentElement;
-    while (firstParcelRow.previousSibling) {
-        firstParcelRow = firstParcelRow.previousSibling;
-        heldCellVerticalIndexOnParcel++;
-    }
+    let droppedOnId = droppedOn.id;
+    let [_2, droppedX, droppedY] = droppedOnId.split('-')
 
-    let parcelLeftEdgeOnTruck = droppedOn;
-    for (let i = 0; i < heldCellHorizontalIndexOnParcel; i++) {
-        parcelLeftEdgeOnTruck = parcelLeftEdgeOnTruck.previousSibling;
-    }
-    let truckLeftEdge = parcelLeftEdgeOnTruck;
-    let parcelHorizontalIndexOnTruck = 0;
-    while (truckLeftEdge.previousSibling) {
-        parcelHorizontalIndexOnTruck++;
-        truckLeftEdge = truckLeftEdge.previousSibling;
-    }
-    
-    let parcelTopRowOnTruck = droppedOn.parentElement;
-    for (let i = 0; i < heldCellVerticalIndexOnParcel; i++) {
-        parcelTopRowOnTruck = parcelTopRowOnTruck.previousSibling;
-    }
-    let parcelTopLeftCellOnTruck = parcelTopRowOnTruck.firstChild;
+    let topLeftX = droppedX - heldX;
+    let topLeftY = droppedY - heldY;
 
-    for (let i = 0; i < parcelHorizontalIndexOnTruck; i++) {
-        parcelTopLeftCellOnTruck = parcelTopLeftCellOnTruck.nextSibling;
-    }
-    
-    let cellToAdd = parcelTopLeftCellOnTruck;
-    let destinationCells = [];
-    for (let i = 0; i < parcelHeight; i++) {
-        let destinationRow = []
-        for (let j = 0; j < parcelWidth; j++) {
-            destinationRow.push(cellToAdd);
-            cellToAdd = cellToAdd.nextSibling ?? cellToAdd;
+    let conveyorId = heldCell.parentElement.parentElement.parentElement.id.split('-')[1];
+
+    let truckCellsToFill = [];
+    try {
+        for (let i = 0; i < parcelWidth; i++) {
+            for (let j = 0; j < parcelHeight; j++) {
+                let parcelCell = document.getElementById(conveyorId + 'parcel-' + i + '-' + j);
+                let truckCell = document.getElementById('truck-' + (topLeftX + i) + '-' + (topLeftY + j));
+                if (!parcelCell || !truckCell) {
+                    throw new OutOfBoundsException('Parcel out of bounds');
+                }
+                if (parcelCell.classList.contains('filled')) {
+                    if (truckCell.classList.contains('filled')) {
+                        throw new OutOfBoundsException('Parcel in the way');
+                    };
+                    truckCellsToFill.push(truckCell);
+                }
+            }
         }
-        destinationCells.push(destinationRow);
-        cellToAdd = cellToAdd.parentElement.nextSibling?.firstChild;
-        for (let k = 0; k < parcelHorizontalIndexOnTruck; k++) {
-            cellToAdd = cellToAdd?.nextSibling;
-        }
+    } catch (err) {
+        window.alert(err.message);
+        return null;
     }
 
-    let toAppendRow = firstParcelRow;
-    destinationCells.forEach(destRow => {
-        let toAppendCell = toAppendRow.firstChild;
-        destRow.forEach(destCell => {
-            destCell.append(toAppendCell.cloneNode());
-            toAppendCell = toAppendCell.nextSibling;
-        });
-        toAppendRow = toAppendRow.nextSibling;
+    truckCellsToFill.forEach(cell => {
+        cell.className += ' filled';
     })
+    return heldCell;
 }
 
+class OutOfBoundsException extends Error {
+
+}
