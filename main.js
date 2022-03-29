@@ -19,12 +19,8 @@ export let types = new TypeEnum(
   'General','Cold','Express','Pallet','Fragile'
 );
 
-// document.addEventListener('mousemove', (e) => {
-//   console.log(e.clientX + " And " + e.clientY);
-// })
-
-let halls = [new Hall()];
-window.currentHall = halls[0];
+window.currentHall = new Hall();
+window.otherHall = new Hall();
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();

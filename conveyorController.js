@@ -2,16 +2,17 @@ import { Parcel } from "./Parcel.js";
 
 export let heldCell;
 
-export function generateParcel(conveyorDiv) {
-    clearParcel(conveyorDiv)
+export function generateParcel(conveyorDiv, conveyor) {
+    clearParcel(conveyorDiv, conveyor);
     let parcelTypes = Object.keys(Parcel);
     let randomType = parcelTypes[Math.floor(Math.random() * parcelTypes.length)]
     let parcel = Parcel[randomType];
-    drawParcel(parcel, conveyorDiv);
+    conveyor.parcel = parcel;
+    conveyorDiv.append(drawParcel(parcel, conveyorDiv.id));
 }
 
-export function drawParcel(parcel, conveyorDiv) {
-    const shape = parcel.shape()
+export function drawParcel(parcel, conveyorDivId) {
+    const shape = parcel.shape();
     let parcelDiv = document.createElement('div');
     parcelDiv.className = 'parcel-div';
     parcelDiv.draggable = 'true';
@@ -28,7 +29,7 @@ export function drawParcel(parcel, conveyorDiv) {
         parcelDiv.append(rowDiv);
         for (let cell = 0; cell < shape[row].length; cell++) {
             let cellDiv = document.createElement('div');
-            cellDiv.id = conveyorDiv.id.split('-')[1] + 'parcel-' + cell + '-' + row;
+            cellDiv.id = conveyorDivId.split('-')[1] + 'parcel-' + cell + '-' + row;
             cellDiv.className = 'cell';
             if(shape[row][cell]) {
                 cellDiv.className += ' filled';
@@ -36,10 +37,10 @@ export function drawParcel(parcel, conveyorDiv) {
             rowDiv.append(cellDiv);
         }
     }
-    conveyorDiv.append(parcelDiv);
+    return parcelDiv;
 }
 
-export function clearParcel(conveyorDiv) {
-    console.log(conveyorDiv);
+export function clearParcel(conveyorDiv, conveyor) {
     conveyorDiv.firstChild?.remove();
+    conveyor.parcel = null;
 }

@@ -5,8 +5,8 @@ export class Hall {
         this.truck;
         addNewConveyor(this);
     }
-    addConveyor() {
-        this.conveyors.push('x');
+    addConveyor(conveyor) {
+        this.conveyors.push(conveyor);
     }
 
     removeConveyor(conveyor){

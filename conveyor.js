@@ -4,7 +4,7 @@ import { clearParcel, drawParcel } from './conveyorController.js';
 export class Conveyor {
     constructor() {
         // this.grid = this.generateGrid();
-        this.parcels = [];
+        this.parcel;
     }
 
     // generateGrid() {

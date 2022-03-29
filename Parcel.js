@@ -63,7 +63,6 @@ export class Parcel {
         }
 
         const numberOfRotations = Math.floor(Math.random() * 4);
-        console.log('numberOfRotations: ' + numberOfRotations);
         return this.randomRotate(result, numberOfRotations);
     }
 
@@ -71,7 +70,6 @@ export class Parcel {
         if (numberOfRotations === 0) {
             return shape;
         }
-        console.log('rotate');
         let rotatedShape = [];
         for (let x = 0; x < shape[0].length; x++) {
             let row = []
