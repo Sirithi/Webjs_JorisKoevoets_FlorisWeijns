@@ -71,7 +71,6 @@ export function loadHall(currentHall, shouldGenerateParcel = false){
     let conveyors = currentHall.conveyors;
     conveyors.forEach(conveyor => {
         let conveyorDiv = generateConveyorDiv(conveyor);
-        console.log(conveyorDiv);
         conveyorDiv.append(drawParcel(conveyor.parcel, conveyorDiv.id.split(':')[1]));
     });
 }

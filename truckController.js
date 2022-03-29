@@ -21,7 +21,6 @@ export function handleDrop(e) {
     let parcelHeight = heldCell.parentElement.parentElement.childElementCount;
 
     let heldCellId = heldCell.id;
-    console.log(heldCellId);
     let [_1, _2, _3, heldX, heldY] = heldCellId.split('-');
 
     let droppedOnId = droppedOn.id;
@@ -38,8 +37,6 @@ export function handleDrop(e) {
             for (let j = 0; j < parcelHeight; j++) {
                 let parcelCell = document.getElementById(conveyorId + '-parcel-' + i + '-' + j);
                 let truckCell = document.getElementById('truck-' + (topLeftX + i) + '-' + (topLeftY + j));
-                console.log(parcelCell);
-                console.log(truckCell);
                 if (!parcelCell || !truckCell) {
                     throw new OutOfBoundsException('Parcel out of bounds');
                 }
