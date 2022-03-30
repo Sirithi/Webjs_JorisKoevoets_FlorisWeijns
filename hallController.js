@@ -1,11 +1,11 @@
 import{ Conveyor } from './Conveyor.js'
-import { drawParcel, generateParcel } from './conveyorController.js';
-import { drawTruck, handleDrop } from './truckController.js';
+import { drawParcel } from './conveyorController.js';
+import { drawTruck } from './truckController.js';
 
 export function addNewConveyor(hall){
     let conveyor = new Conveyor();
     conveyor.id = hall.id + '-' +(hall.conveyors.length + 1);
-    generateParcel(conveyor);
+    conveyor.generateParcel();
     hall.addConveyor(conveyor);
     loadHall(true);
 }

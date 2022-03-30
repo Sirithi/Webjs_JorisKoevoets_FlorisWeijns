@@ -1,4 +1,4 @@
-import { clearParcel, generateParcel, heldCell } from "./conveyorController.js";
+import { clearParcel, heldCell } from "./conveyorController.js";
 import { loadHall } from "./hallController.js";
 
 
@@ -21,7 +21,7 @@ export function drawTruck(truck){
             })];
 
             clearParcel(conveyorDiv, currentHall.conveyors[parseInt(conveyorDiv.id.split(':')[1].split('-')[1]) - 1]);
-            conveyor.parcel = generateParcel();
+            conveyor.generateParcel();
             loadHall()
         }
     });

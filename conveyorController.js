@@ -1,15 +1,4 @@
-import { Parcel } from "./Parcel.js";
-
 export let heldCell;
-
-export function generateParcel() {
-    // clearParcel(conveyorDiv, conveyor);
-    let parcelTypes = Object.keys(Parcel);
-    let randomType = parcelTypes[Math.floor(Math.random() * parcelTypes.length)]
-    let parcel = Parcel[randomType]();
-    return parcel;
-    // conveyorDiv.append(drawParcel(parcel, conveyorDiv.id));
-}
 
 export function drawParcel(parcel, conveyorDivId) {
     const shape = parcel.shape;
