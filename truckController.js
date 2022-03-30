@@ -11,7 +11,6 @@ export function drawTruck(truck){
         e.preventDefault();
         let heldCell = handleDrop(e)
         if (heldCell) {
-            console.log(heldCell);
             let conveyorDiv = heldCell.parentElement.parentElement.parentElement;
             let conveyor = currentHall.conveyors[currentHall.conveyors.findIndex(conveyor => {
                 if (conveyor.id == conveyorDiv.id.split(':')[1]) {
@@ -19,7 +18,7 @@ export function drawTruck(truck){
                 }
                 return false;
             })];
-
+            
             clearParcel(conveyorDiv, currentHall.conveyors[parseInt(conveyorDiv.id.split(':')[1].split('-')[1]) - 1]);
             conveyor.generateParcel();
             loadHall()
@@ -95,8 +94,12 @@ export function handleDrop(e) {
         cell.className += ' filled';
         currentHall.truck.fillSpaces(cell.id.split('-')[1], cell.id.split('-')[2]);
     })
-    
+    doAnimation(heldCell, droppedOn);
     return heldCell;
+}
+
+function doAnimation(heldCell, droppedOn){
+    console.log(heldCell);
 }
 
 class OutOfBoundsException extends Error {

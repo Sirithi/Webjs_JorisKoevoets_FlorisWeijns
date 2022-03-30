@@ -43,8 +43,7 @@ function emptyHall(){
     
 }
 
-export function loadHall(shouldGenerateParcel = false){
-    console.log('loadHall: ' + currentHall.id);
+export function loadHall(){
     emptyHall();
     let conveyors = currentHall.conveyors;
     conveyors.forEach(conveyor => {

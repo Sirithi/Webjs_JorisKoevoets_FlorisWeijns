@@ -1,4 +1,3 @@
-import { Conveyor } from "./Conveyor.js";
 import { loadHall } from "./hallController.js";
 
 export class Hall {
@@ -26,11 +25,16 @@ export class Hall {
         this.conveyors.push(conveyor);
     }
 
-    removeConveyor(conveyor){
+    removeConveyor(conveyor) {
         for(let i = 0; i < this.conveyors.length; i++){ 
             if ( conveyors[i] === conveyor) { 
                 arr.splice(i, 1); 
             }
         }
+    }
+
+    sendTruck() {
+        this.truck = null;
+        loadHall();
     }
 }

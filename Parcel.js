@@ -64,7 +64,6 @@ export class Parcel {
         }
 
         const numberOfRotations = Math.floor(Math.random() * 4);
-        console.log(numberOfRotations);
         return this.randomRotate(result, numberOfRotations);
     }
 

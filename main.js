@@ -2,12 +2,18 @@ import{ TypeEnum } from './TypeEnum.js';
 import{ Hall } from './Hall.js';
 import{ Truck } from './Truck.js';
 import {loadStepForm} from './StepForm.js';
-import {addNewConveyor, /*addTruckFromQueue,*/ loadHall, switchHall} from './hallController.js';
+import {addNewConveyor, loadHall, switchHall} from './hallController.js';
+import { changeCity } from './weatherApi.js';
 
 document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
 document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConveyor(currentHall)");
-// document.getElementById("add-transport-btn").setAttribute("onclick", "addTruckFromQueue(currentHall)");
+document.getElementById("send-truck-btn").setAttribute("onclick", "currentHall.sendTruck()");
 document.getElementById("switch-hall-btn").setAttribute("onclick", "switchHall()");
+
+document.getElementById('city-search').addEventListener('input', e => {
+  changeCity(e.target.value);
+});
+changeCity('Den Bosch');
 
 window.truckQueue = [];
 window.currentHall = new Hall(1);
@@ -15,7 +21,6 @@ window.otherHall = new Hall(2);
 
 window.loadForm = loadForm;
 window.addNewConveyor = addNewConveyor;
-// window.addTruckFromQueue = addTruckFromQueue;
 window.switchHall = switchHall;
 
 //Truck form variables
@@ -31,6 +36,7 @@ function loadForm(){
     document.getElementById("add-truck-btn").remove();
     let stepform = document.createElement("form");
     stepform.id = "truck-form";
+    stepform.className = 'truck-form';
     stepform.action = "";
 
     const head = document.createElement("h1");
