@@ -2,29 +2,30 @@ import{ TypeEnum } from './TypeEnum.js';
 import{ Hall } from './Hall.js';
 import{ Truck } from './Truck.js';
 import {loadStepForm} from './StepForm.js';
-import {addNewConveyor, addTruckFromQueue, loadHall, switchHall} from './hallController.js';
+import {addNewConveyor, /*addTruckFromQueue,*/ loadHall, switchHall} from './hallController.js';
 
 document.getElementById("add-truck-btn").setAttribute("onclick", "loadForm()");
 document.getElementById("add-conveyor-btn").setAttribute("onclick", "addNewConveyor(currentHall)");
-document.getElementById("add-transport-btn").setAttribute("onclick", "addTruckFromQueue(currentHall, trucks)");
+// document.getElementById("add-transport-btn").setAttribute("onclick", "addTruckFromQueue(currentHall)");
 document.getElementById("switch-hall-btn").setAttribute("onclick", "switchHall()");
+
+window.truckQueue = [];
+window.currentHall = new Hall(1);
+window.otherHall = new Hall(2);
 
 window.loadForm = loadForm;
 window.addNewConveyor = addNewConveyor;
-window.addTruckFromQueue = addTruckFromQueue;
+// window.addTruckFromQueue = addTruckFromQueue;
 window.switchHall = switchHall;
 
 //Truck form variables
 window.currentTab = 0
-window.trucks = [new Truck(6,4, 'Groningen', 'cold', 0)];
+window.trucks = [new Truck('6', '4', 'Groningen', 'cold', '1')];
 export let types = new TypeEnum(
   'General','Cold','Express','Pallet','Fragile'
 );
 
-window.currentHall = new Hall(1);
-window.otherHall = new Hall(2);
 loadHall();
-
 
 function loadForm(){
     document.getElementById("add-truck-btn").remove();
@@ -42,12 +43,19 @@ function loadForm(){
     truckLength.placeholder = 'Truck length';
     truckLength.id = 'truck-length';
     truckLength.type = 'number';
+    truckLength.min = 4;
     let truckWidth = document.createElement('input');
     truckWidth.id = 'truck-width';
     truckWidth.placeholder = 'Truck width';
     truckWidth.type = 'number';
+    truckWidth.min = 4;
+    let arrivalTime = document.createElement('input');
+    arrivalTime.id = 'arrival-time';
+    arrivalTime.placeholder = 'Arrival time (seconds)';
+    arrivalTime.type = 'number';
+    arrivalTime.min = 0;
 
-    sizeDiv.append(truckLength, truckWidth);
+    sizeDiv.append(truckLength, truckWidth, arrivalTime);
 
     let provinceDiv = document.createElement('div');
     provinceDiv.className = 'tab none';

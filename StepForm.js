@@ -31,6 +31,7 @@ export function loadStepForm() {
     if (currentTab >= tabs.length) {
       const length = document.getElementById('truck-length').value;
       const width = document.getElementById('truck-width').value;
+      const arrivalTime = document.getElementById('arrival-time').value;
       const types = document.getElementsByName('type');
       let truckType;
       types.forEach(type => {
@@ -45,7 +46,9 @@ export function loadStepForm() {
           truckProvince = province.value;
         }
       });
-      trucks.push(new Truck(length, width, truckProvince, truckType));
+      const truck = new Truck(length, width, truckProvince, truckType, arrivalTime)
+      window.trucks.push(truck);
+      
       let addTruckBtn = document.createElement('button');
       addTruckBtn.id = 'add-truck-btn';
       addTruckBtn.type = 'button';

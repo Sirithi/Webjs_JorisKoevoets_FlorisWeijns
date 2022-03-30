@@ -4,12 +4,17 @@ export class Truck {
         this.width = width;
         this.province = province;
         this.type = type;
-        this.arrivalInterval = arrivalInterval;
+        this.arrivalInterval = parseInt(arrivalInterval);
         this.spaces = this.setSpaces();
+        this.addToQueue();
     }
 
-    setArrivalTime(arrival){
-        this.arrivalInterval = arrival;
+    async addToQueue() {
+        await new Promise(resolve => setTimeout(resolve, 1000 * this.arrivalInterval))
+        .then(() => {
+            window.truckQueue.push(this);
+            window.trucks.splice(window.trucks.indexOf(this));
+        });
     }
 
     setSpaces(){

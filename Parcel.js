@@ -1,11 +1,11 @@
 export class Parcel {
-    static I = new Parcel('I');
-    static O = new Parcel('O');
-    static T = new Parcel('T');
-    static J = new Parcel('J');
-    static L = new Parcel('L');
-    static S = new Parcel('S');
-    static Z = new Parcel('Z');
+    static I = function() { return new Parcel('I');}
+    static O = function() { return new Parcel('O');}
+    static T = function() { return new Parcel('T');}
+    static J = function() { return new Parcel('J');}
+    static L = function() { return new Parcel('L');}
+    static S = function() { return new Parcel('S');}
+    static Z = function() { return new Parcel('Z');}
 
     constructor(type) {
         this.type = type;
@@ -64,6 +64,7 @@ export class Parcel {
         }
 
         const numberOfRotations = Math.floor(Math.random() * 4);
+        console.log(numberOfRotations);
         return this.randomRotate(result, numberOfRotations);
     }
 

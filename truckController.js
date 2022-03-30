@@ -1,4 +1,4 @@
-import { generateParcel, heldCell } from "./conveyorController.js";
+import { clearParcel, generateParcel, heldCell } from "./conveyorController.js";
 import { loadHall } from "./hallController.js";
 
 
@@ -11,6 +11,7 @@ export function drawTruck(truck){
         e.preventDefault();
         let heldCell = handleDrop(e)
         if (heldCell) {
+            console.log(heldCell);
             let conveyorDiv = heldCell.parentElement.parentElement.parentElement;
             let conveyor = currentHall.conveyors[currentHall.conveyors.findIndex(conveyor => {
                 if (conveyor.id == conveyorDiv.id.split(':')[1]) {
@@ -18,7 +19,9 @@ export function drawTruck(truck){
                 }
                 return false;
             })];
-            generateParcel(conveyor);
+
+            clearParcel(conveyorDiv, currentHall.conveyors[parseInt(conveyorDiv.id.split(':')[1].split('-')[1]) - 1]);
+            conveyor.parcel = generateParcel();
             loadHall()
         }
     });
@@ -43,7 +46,6 @@ export function drawTruck(truck){
     for (let y = 0; y < truck.spaces.length; y++) {
         for (let x = 0; x < truck.spaces[y].length; x++) {
             if(truck.spaces[y][x]){
-                console.log('truck-' + x + '-' + y);
                 document.getElementById('truck-' + x + '-' + y).className += ' filled';
             }
         }

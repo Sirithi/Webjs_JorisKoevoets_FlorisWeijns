@@ -18,15 +18,14 @@ function generateConveyorDiv(conveyor){
     return div;
 }
 
-export function addTruckFromQueue(hall, trucks){
-    if(!canAddTruck(hall, trucks)){
-        return;
-    }
-    hall.truck = trucks.shift();
-    
+// export function addTruckFromQueue(hall){
+//     if(!canAddTruck(hall)){
+//         return;
+//     }
+//     hall.truck = truckQueue.shift();
 
-    drawTruck(hall.truck);
-}
+//     drawTruck(hall.truck);
+// }
 
 export function switchHall(){
     let tempHall = window.currentHall;
@@ -45,6 +44,7 @@ function emptyHall(){
 }
 
 export function loadHall(shouldGenerateParcel = false){
+    console.log('loadHall: ' + currentHall.id);
     emptyHall();
     let conveyors = currentHall.conveyors;
     conveyors.forEach(conveyor => {
@@ -57,8 +57,8 @@ export function loadHall(shouldGenerateParcel = false){
     
 }
 
-function canAddTruck(hall, trucks){
-    if(trucks.length < 1){
+function canAddTruck(hall){
+    if(truckQueue.length < 1){
         window.alert('No more trucks to add');
         return false;
     }
