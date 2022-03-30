@@ -7,9 +7,9 @@ export function drawTruck(truck){
     truckDiv.className = 'truck-div dropzone';
     document.getElementById('truck').append(truckDiv);
 
-    truckDiv.addEventListener('drop', (e) =>{
+    truckDiv.addEventListener('drop', async function(e) {
         e.preventDefault();
-        let heldCell = handleDrop(e)
+        let heldCell = await handleDrop(e)
         if (heldCell) {
             let conveyorDiv = heldCell.parentElement.parentElement.parentElement;
             let conveyor = currentHall.conveyors[currentHall.conveyors.findIndex(conveyor => {
@@ -51,7 +51,7 @@ export function drawTruck(truck){
     }
 }
 
-export function handleDrop(e) {
+export async function handleDrop(e) {
     let droppedOn = document.elementFromPoint(e.clientX, e.clientY);
     
     let parcelWidth = heldCell.parentElement.childElementCount;
@@ -89,17 +89,36 @@ export function handleDrop(e) {
         window.alert(err.message);
         return null;
     }
+    
+    let newHeldCell = await doAnimation(heldCell, droppedOn);
+    console.log(newHeldCell);
 
     truckCellsToFill.forEach(cell => {
         cell.className += ' filled';
         currentHall.truck.fillSpaces(cell.id.split('-')[1], cell.id.split('-')[2]);
     })
-    doAnimation(heldCell, droppedOn);
+    return newHeldCell;
+}
+
+async function doAnimation(heldCell, droppedOn){
+    let xDist = droppedOn.getBoundingClientRect().x - heldCell.getBoundingClientRect().x;
+    let yDist = droppedOn.getBoundingClientRect().y - heldCell.getBoundingClientRect().y;
+    let parcelDiv = heldCell.parentElement.parentElement;
+
+    for (let i = 0; i <= ANIMATION_LENGTH; i++) {
+        await sleep(10);
+        // parcelDiv.style.transform = `translateX(${i * xDist / ANIMATION_LENGTH}px)`
+        // parcelDiv.style.transform += ` translateY(${i * yDist / ANIMATION_LENGTH}px)`;
+        let x = i * xDist / ANIMATION_LENGTH;
+        let y = i * yDist / ANIMATION_LENGTH;
+        parcelDiv.style.transform = `translate(${x}px, ${y}px)`;
+    }
+    
     return heldCell;
 }
 
-function doAnimation(heldCell, droppedOn){
-    console.log(heldCell);
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 class OutOfBoundsException extends Error {
