@@ -13,11 +13,8 @@
 <body>
   <div class="content flex-horizontal" id="content">
     <div class="flex-vertical control-container">
-      <div id="truck-form-div" class="truck-form-div flex-horizontal">
-        <button type="button" id="add-truck-btn">Add Truck</button>
-      </div>
-      <div class="weather" id="weather-control">
-        <div>
+      <div>
+        <div class="weather" id="weather-control"></div>
           <h1>Weather</h1>
           <input type="text" placeholder="City name" id="city-search">
         </div>
@@ -32,29 +29,38 @@
             <label" id="weather-label"></label>
           </div>
         </div>
-      </div>
-    </div>
-    
-    <div class="visuals">
-      <div>
-        <h1>Stackr</h1>
-        <button id="switch-hall-btn">Switch Hall</button>
-      </div>
-      <div class="flex-horizontal">
-          <div>
-            <button id="add-conveyor-btn">Add Conveyor</button>
-            <p>Conveyors</p>
-            <div id="conveyors">
-            </div>
+        <div>
+          <div id="truck-form-div" class="truck-form-div flex-horizontal">
+            <button type="button" id="add-truck-btn">Add Truck</button>
           </div>
-        
-        <div id="truck">
-          <button id="send-truck-btn">Send Truck</button>
-          <p>Truck</p>
+          <div id="truck-queue">
+            
+          </div>
+          <div id="truck-arrivals">
+
+          </div>
+        </div>
+      </div>
+      <div class="visuals">
+        <div>
+          <h1>Stackr</h1>
+          <button id="switch-hall-btn">Switch Hall</button>
+        </div>
+        <div class="flex-horizontal">
+            <div>
+              <button id="add-conveyor-btn">Add Conveyor</button>
+              <p>Conveyors</p>
+              <div id="conveyors">
+              </div>
+            </div>
+          
+          <div id="truck">
+            <button id="send-truck-btn">Send Truck</button>
+            <p>Truck</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  
 </body>
 </html>

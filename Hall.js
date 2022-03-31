@@ -1,4 +1,5 @@
 import { loadHall } from "./hallController.js";
+import { updateTruckList } from "./truckController.js";
 
 export class Hall {
     constructor(id){
@@ -17,6 +18,9 @@ export class Hall {
             hall.truck = window.truckQueue.shift();
             if (hall === currentHall){
                 loadHall();
+            }
+            if(hall.truck){
+                updateTruckList();
             } 
         }
     }

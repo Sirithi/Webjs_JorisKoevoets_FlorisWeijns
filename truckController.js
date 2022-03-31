@@ -27,7 +27,6 @@ export function drawTruck(truck){
 
     truckDiv.addEventListener('dragover', (e) => {
         e.preventDefault();
-        //TODO: showPreview();
     });
 
     for (let i = 0; i < truck.width; i++) {
@@ -91,13 +90,67 @@ export async function handleDrop(e) {
     }
     
     let newHeldCell = await doAnimation(heldCell, droppedOn);
-    console.log(newHeldCell);
 
     truckCellsToFill.forEach(cell => {
         cell.className += ' filled';
         currentHall.truck.fillSpaces(cell.id.split('-')[1], cell.id.split('-')[2]);
     })
     return newHeldCell;
+}
+
+export function updateTruckList() {
+    if(truckFormIsOpen){
+        return;
+    }
+    let truckQueueDiv = document.getElementById('truck-queue');
+    let truckArrivalsDiv = document.getElementById('truck-arrivals');
+
+    truckArrivalsDiv.replaceChildren();
+    let arrivalsHeader = document.createElement('h2');
+    arrivalsHeader.innerHTML = 'Arrivals';
+    truckArrivalsDiv.append(arrivalsHeader);
+    trucks.forEach(truck => {
+        
+        let truckDiv = document.createElement('div');
+        truckDiv.className = 'flex-vertical';
+        truckDiv.id = 'truck-' + trucks.indexOf(truck);
+        let typeString = truck.type.charAt(0).toUpperCase() + truck.type.slice(1);
+        let typeLabel =  document.createElement('label');
+        typeLabel.innerHTML = typeString;
+        let arrivalLabel =  document.createElement('label');
+        arrivalLabel.innerHTML = 'Arrives in: ' + truck.arrivalInterval + ' s';
+        let measurementLabel =  document.createElement('label');
+        measurementLabel.innerHTML = 'W: ' + truck.width + ', L: ' + truck.length;
+        truckDiv.append(typeLabel, arrivalLabel, measurementLabel);
+        truckArrivalsDiv.append(truckDiv);
+    });
+
+    truckQueueDiv.replaceChildren();
+    let queueHeader = document.createElement('h2');
+    queueHeader.innerHTML = 'Truck queue';
+    truckQueueDiv.append(queueHeader);
+    truckQueue.forEach(truck => {
+        let truckDiv = document.createElement('div');
+        truckDiv.className = 'flex-vertical';
+        let typeString = truck.type.charAt(0).toUpperCase() + truck.type.slice(1);
+        let typeLabel =  document.createElement('label');
+        typeLabel.innerHTML = typeString;
+        let measurementLabel =  document.createElement('label');
+        measurementLabel.innerHTML = 'W: ' + truck.width + ', L: ' + truck.length;
+        truckDiv.append(typeLabel, measurementLabel);
+        truckQueueDiv.append(truckDiv);
+    });
+    if(truckQueueDiv.childElementCount == 1){
+        truckQueueDiv.append(document.createElement('label').innerHTML = 'Empty');
+    }
+    if(truckArrivalsDiv.childElementCount == 1){
+        truckArrivalsDiv.append(document.createElement('label').innerHTML = 'Empty');
+    }
+}
+
+export function updateArrivalTime(truck){
+    let truckArrivalLabel = document.getElementById('truck-' + trucks.indexOf(truck)).children[1];
+    truckArrivalLabel.innerHTML = 'Arrives in: ' + truck.arrivalInterval + ' s';
 }
 
 async function doAnimation(heldCell, droppedOn){
@@ -107,8 +160,6 @@ async function doAnimation(heldCell, droppedOn){
 
     for (let i = 0; i <= ANIMATION_LENGTH; i++) {
         await sleep(10);
-        // parcelDiv.style.transform = `translateX(${i * xDist / ANIMATION_LENGTH}px)`
-        // parcelDiv.style.transform += ` translateY(${i * yDist / ANIMATION_LENGTH}px)`;
         let x = i * xDist / ANIMATION_LENGTH;
         let y = i * yDist / ANIMATION_LENGTH;
         parcelDiv.style.transform = `translate(${x}px, ${y}px)`;

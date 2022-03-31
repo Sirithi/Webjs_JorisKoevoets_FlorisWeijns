@@ -9,7 +9,7 @@ export async function changeCity(city){
         .then(response => response.json())
         .then(data => fillData(data))
         .catch(error => {
-            
+            window.alert('Check your internet connection!');
         });
 }
 

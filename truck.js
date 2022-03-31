@@ -1,3 +1,5 @@
+import { updateArrivalTime, updateTruckList } from "./truckController.js";
+
 export class Truck {
     constructor(length, width, province, type, arrivalInterval = 10){
         this.length = length;
@@ -17,7 +19,9 @@ export class Truck {
         if(truck.arrivalInterval <= 0) {
             clearInterval(truck.timer);
             window.truckQueue.push(truck);
-            window.trucks.splice(window.trucks.indexOf(truck));
+            window.trucks.splice(window.trucks.indexOf(truck), 1);
+            updateTruckList();
+            return;
         }
 
         let temp = parseInt(document.getElementById('temperature-label').innerHTML);
@@ -27,9 +31,12 @@ export class Truck {
             return;
         }
         if(truck.type == 'fragile' && (weatherList.includes('Rain') || weatherList.includes('Snow'))){
-                return;
+            return;
         }
         truck.arrivalInterval--;
+        if(!truckFormIsOpen){
+            updateArrivalTime(truck);
+        }
     }
 
     setSpaces(){

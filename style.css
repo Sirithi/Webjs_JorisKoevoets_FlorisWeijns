@@ -57,10 +57,13 @@ input.invalid {
   flex-direction: row;
 }
 
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
 .truck-form-div{
   margin: 10px;
-  /* min-width: 30%;
-  max-width: 30%; */
 }
 
 .truck-form {

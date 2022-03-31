@@ -18,15 +18,6 @@ function generateConveyorDiv(conveyor){
     return div;
 }
 
-// export function addTruckFromQueue(hall){
-//     if(!canAddTruck(hall)){
-//         return;
-//     }
-//     hall.truck = truckQueue.shift();
-
-//     drawTruck(hall.truck);
-// }
-
 export function switchHall(){
     let tempHall = window.currentHall;
     window.currentHall = window.otherHall;
@@ -40,7 +31,6 @@ function emptyHall(){
         truckDiv[0].remove()
     }
     document.getElementById('conveyors').replaceChildren();
-    
 }
 
 export function loadHall(){

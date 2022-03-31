@@ -1,5 +1,5 @@
 import { Truck } from './Truck.js'
-import { types} from './main.js'
+import { updateTruckList } from './truckController.js';
 
 export function loadStepForm() {
   showTab(currentTab); 
@@ -48,6 +48,8 @@ export function loadStepForm() {
       });
       const truck = new Truck(length, width, truckProvince, truckType, arrivalTime)
       window.trucks.push(truck);
+      truckFormIsOpen = false;
+      updateTruckList();
       
       let addTruckBtn = document.createElement('button');
       addTruckBtn.id = 'add-truck-btn';
